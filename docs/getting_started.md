@@ -33,7 +33,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.palantir.gradle.conjure:gradle-conjure:4.6.2'
+        classpath 'com.palantir.gradle.conjure:gradle-conjure:5.41.0'
     }
 }
 
@@ -42,6 +42,18 @@ allprojects {
         mavenCentral()
     }
 }
+
+configurations {
+    conjureCompiler
+    conjureJava
+    conjureTypeScript
+}
+
+dependencies {
+    conjureCompiler 'com.palantir.conjure:conjure:4.38.0'
+    conjureJava 'com.palantir.conjure.java:conjure-java:7.19.0'
+    conjureTypeScript 'com.palantir.conjure.typescript:conjure-typescript:5.5.0'
+}
 ```
 
 Then in `./your-project-api/build.gradle`, apply the plugin and specify versions for each generator.
@@ -49,16 +61,10 @@ Then in `./your-project-api/build.gradle`, apply the plugin and specify versions
 ```groovy
 apply plugin: 'com.palantir.conjure'
 
-dependencies {
-    conjureCompiler 'com.palantir.conjure:conjure:4.4.0'
-    conjureJava 'com.palantir.conjure.java:conjure-java:2.5.0'
-    conjureTypeScript 'com.palantir.conjure.typescript:conjure-typescript:3.4.0'
-}
-
 subprojects {
     pluginManager.withPlugin 'java', {
         dependencies {
-            implementation 'com.palantir.conjure.java:conjure-lib:2.5.0'
+            implementation 'com.palantir.conjure.java:conjure-lib:7.19.0'
         }
     }
 }
